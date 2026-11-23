@@ -37,8 +37,10 @@ release; nothing is released without the owner.
 ## Consequences
 
 - Needs a public GitHub repository and a public package on ghcr.io (the Green pulls without
-  credentials), which the owner has not yet approved (CLAUDE.md, Housekeeping).
-  [NEEDS CLARIFICATION: which GitHub account and repository name, and when it goes public.]
+  credentials). Decided by the owner on 2026-11-23: it will live under the owner's own
+  GitHub account for now, and the repository stays local until there is something that
+  needs CI. Until then the add-on is built from a local add-on folder (see Alternatives:
+  development). The repository name is chosen when it is created.
 - If the version bump reaches the default branch before the image exists, every Green
   offered the update fails to install it. The workflow must make that order impossible.
 - amd64 is built because upstream publishes it and it costs nothing, but only the Green is

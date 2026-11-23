@@ -227,10 +227,9 @@ Log tab (SR-1). No log files.
 
 ## Open questions
 
-For the owner:
-
-1. D-003: which GitHub account and repository name, and when may the repository and its
-   image on ghcr.io be made public? Nothing is published until then.
+For the owner: none open. Answered on 2026-11-23 (D-003): the repository will live under the
+owner's own GitHub account for now and stays local until something needs CI; nothing is
+pushed or published before the owner says so.
 
 To be confirmed on the device, at the first on-device milestone:
 
