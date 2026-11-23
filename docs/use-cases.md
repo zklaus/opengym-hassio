@@ -140,3 +140,7 @@ Add here, or promote to a numbered use case:
 - Have Home Assistant react when a workout is finished or a weigh-in is logged, using
   upstream's webhooks (v1.4.4). Off for v1, possible option later (2026-11-23).
 - Sign in through an identity provider (upstream OIDC, v1.4.5). Not planned (2026-11-23).
+- Let an AI assistant the person already pays for (Claude, ChatGPT) read and change their own
+  profile as a connector, using upstream's MCP server (v1.4.5): "make me three routines",
+  "log today's squats". No API key; each person connects their own account. Candidate for
+  later (2026-11-23); needs a third upstream program in the add-on (architecture.md).

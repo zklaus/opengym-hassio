@@ -136,8 +136,9 @@ Serves: UC-1, UC-4
 - WHEN the add-on is installed or updated on a Home Assistant Green THE SYSTEM SHALL complete
   the installation without compiling or assembling openGym on the device.
 - WHEN the add-on is running with five profiles and nobody training THE SYSTEM SHALL use no
-  more than [NEEDS CLARIFICATION: memory ceiling; proposed 300 MB, to be confirmed by
-  measuring unmodified upstream on the Green in Phase 2] of memory.
+  more than 200 MB of memory. (Revised 2026-11-23 in Phase 2: a spike measured about 67 MiB
+  at rest on a workstation, see architecture.md, Spikes; this replaces the unmeasured
+  "proposed 300 MB". The figure on the Green is taken at verification.)
 
 Decided by the owner on 2026-11-23: the Green is the only verified device. Other Home
 Assistant OS machines may work; nothing is checked or promised for them.
@@ -174,7 +175,9 @@ releases valid for the add-on.
 - WHEN an add-on version is published THE SYSTEM SHALL name the openGym release it carries in
   its version number or changelog.
 - WHEN the add-on runs THE SYSTEM SHALL run nothing beyond what that openGym release needs to
-  serve the app (no extra services, no AI coach).
+  serve the app (no extra services, no AI runtime in the container). The AI Coach that an
+  administrator connects in the app to an outside provider is part of openGym and stays
+  available (revised 2026-11-23; see vision.md, Non-goals).
 - WHEN the add-on's configuration is rendered THE SYSTEM SHALL only use settings that
   upstream documents; an upstream feature the owner has not asked for stays at upstream's
   default or off (webhooks and identity-provider sign-in: off).
@@ -211,10 +214,7 @@ None open for the owner. Answered on 2026-11-23 and recorded in place: sign-up i
 only after the owner's profile exists (FR-4); the HTTPS front end runs on the same device
 (FR-2); the Green is the only verified device (POR-1); updates within 7 days (SC-3).
 
-To be measured, not asked (time-boxed spike early in Phase 2, outcome recorded):
-
-1. POR-1: memory used by unmodified openGym v1.4.5 on the Green, to replace the proposed
-   300 MB ceiling with a measured one.
+Measured in Phase 2 (architecture.md, Spikes): the memory ceiling in POR-1.
 
 Checked while drafting, against upstream v1.4.5 on 2026-11-23, so no question remains:
 

@@ -80,8 +80,13 @@ These are out of scope. Each one could be a separate project later.
 - **Not an HTTPS or reverse-proxy tutorial.** The add-on documents which hostname and origin
   settings each common Home Assistant HTTPS setup implies, and points to upstream's guides
   for the rest.
-- **No AI coach by default.** Upstream's optional coach image target is a separate concern
-  and may never be packaged.
+- **No AI runtime in the container.** Upstream's coach variants that run an AI program
+  inside the container (Claude Agent SDK, Codex) need a different, unpublished build of
+  openGym and are not packaged. The AI Coach itself is available: an administrator can
+  connect it in the app to a provider by API key, or to a model server on the home network.
+  That is upstream's own feature and needs nothing from the add-on. Revised 2026-11-23; the
+  earlier wording ("No AI coach by default") overlooked that this form is part of every
+  openGym image.
 - **No authentication of our own.** No Remote-User header, no signing Home Assistant users
   in automatically, nothing beyond what upstream ships. Upstream's own sign-in methods
   (passkeys, password, guest, and since v1.4.5 an OIDC provider) are upstream features.

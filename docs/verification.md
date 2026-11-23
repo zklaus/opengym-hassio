@@ -26,12 +26,13 @@ at" is filled in Phase 3, when the milestones exist.
 | RR-1 | Given data from the FR checks, when the device is rebooted, then all of it is still shown. | Manual | | |
 | RR-1 | Given a backup taken while the add-on runs, when it is restored on a fresh Home Assistant and the public address is pointed there, then all data is shown, the browser is still signed in and the passkey still works. | Manual, second installation | | |
 | RR-1 | Given an installation with data on the previous add-on version, when the update is installed, then openGym runs the new version with the same data. | Manual | | |
-| POR-1 | Given a Green, when the add-on is installed, then no build of openGym runs on the device (installation log), and memory use at rest with five profiles stays under the ceiling. | Manual, Home Assistant's add-on statistics | | |
+| POR-1 | Given a Green, when the add-on is installed, then no build of openGym runs on the device (installation log), and memory use at rest with five profiles stays under 200 MB. | Manual, Home Assistant's add-on statistics | | |
 | SR-1 | Given the add-on is running, when openGym is opened at a different address and sign-in is tried, then the log names the address used and the address expected. | Manual; scriptable | | |
 | SR-1 | Given the data location is made unwritable, when the add-on starts, then the log says so and the add-on stops. | Manual, development environment | | |
 | SR-1 | Given the add-on is running, when openGym is made to stop answering, then Home Assistant restarts it unprompted. | Manual | | |
 | DR-1 | Given a published add-on version, when what it carries is compared with the upstream release it names, then the two are identical. | Script | | |
 | DR-1 | Given a running add-on, when its settings are listed, then every one is documented by upstream, and webhooks and identity-provider sign-in are off. | Script plus review | | |
+| DR-1 | Given a running add-on, when the processes in the container are listed, then they are the start script, the API and nginx, and nothing else; the administrator's AI Coach card offers the API-key providers and reports the in-container runtimes as unavailable. | Manual | | |
 | SC-1 | The owner times the path from "add repository" to a logged workout, following DOCS only: under ten minutes. | Manual, stopwatch | | |
 | SC-2 | Backup on one device, restore on another: every item in the SC-2 list is back and the Android app and a watch sync without re-pairing. | Manual, second device | | |
 | SC-3 | For each of the next three openGym releases, record the days until the add-on update was available and whether it installed in one click. | Record in CHANGELOG | | |
