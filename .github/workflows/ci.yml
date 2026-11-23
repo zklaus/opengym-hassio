@@ -1,0 +1,41 @@
+# Checks on every change: the specification's traceability, and the add-on image with its
+# start script. On main it also checks that the image for the version in config.yaml has
+# been published, because that version is what Home Assistant offers to install.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  spec:
+    name: Specification traceability
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: scripts/check-trace.sh
+
+  image:
+    name: Image and start script
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: tests/run.sh
+
+  published:
+    name: Image for this version is published
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: The version in config.yaml must already exist in the registry
+        run: scripts/addon-image.sh check

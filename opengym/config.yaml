@@ -4,7 +4,9 @@ name: openGym
 version: "1.4.5-1"
 slug: opengym
 description: Self-hosted gym and body-weight tracker, served at its own HTTPS address
-url: https://github.com/DuarteSantos8/openGym
+url: https://github.com/zklaus/opengym-hassio
+# Built and pushed by CI for both architectures; the tag is `version` (decisions/003).
+image: ghcr.io/zklaus/opengym-addon
 arch:
   - aarch64
   - amd64

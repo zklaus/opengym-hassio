@@ -80,6 +80,9 @@ echo "== upstream's files are unmodified (DR-1)"
 [ "$(tree_sum "$IMAGE" /docker-entrypoint.d)" = "$(tree_sum "$WEB_REF" /docker-entrypoint.d)" ] \
   && pass "nginx's entrypoint scripts are upstream's" || fail "/docker-entrypoint.d differs"
 
+docker run --rm --entrypoint sh "$IMAGE" -c 'test -s /usr/share/doc/opengym/LICENSE && grep -q "Gym visual" /usr/share/doc/opengym/NOTICE.md && test -s /usr/share/nginx/html/exercise-media/NOTICE.md' \
+  && pass "openGym's licence and notices are in the image (D-007)" || fail "licence or notices missing from the image"
+
 echo "== unusable options are refused with a message (FR-1, FR-2)"
 refused() { # refused <description> <options json> <text the log must contain>
   new_data bad "$2"; start "$DATA"

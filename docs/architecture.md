@@ -51,7 +51,8 @@ start the add-on until it is filled in.
 Satisfies: DR-1, POR-1
 
 Upstream's `opengym-web:X` as the base, `/app` and the Node binary copied from
-`opengym-api:X`, both pinned by digest, two packages and the start script added (D-001).
+`opengym-api:X`, both pinned by digest, two packages and the start script added (D-001),
+and upstream's licence and notices under `/usr/share/doc/opengym/` (D-007).
 Built in CI for both architectures, never on the Green (D-003).
 
 ### C3 Start script (`opengym/run.sh`)
@@ -107,8 +108,8 @@ pairings survive restart, update and restore because the secret that signs them 
 Satisfies: FR-1, DR-1, POR-1, SC-3
 
 `repository.yaml` at the root makes the repository addable in the add-on store. A GitHub
-Actions workflow builds the image for each add-on version and pushes it to GitHub's container
-registry (ghcr.io), and fails if `/app` or the
+Actions workflow, started by hand on the branch that carries a new version, builds the image
+for each add-on version and pushes it to GitHub's container registry (ghcr.io), and fails if `/app` or the
 web root differ from upstream's or if the API does not answer in the built image. A scheduled
 workflow notices a new upstream release and prepares the version bump and the `CHANGELOG.md`
 entry naming the openGym release; the owner reviews and releases (D-003). Home Assistant
@@ -216,6 +217,7 @@ Log tab (SR-1). No log files.
 | D-004 | One start script supervises both programs; either stopping stops the container | accepted |
 | D-005 | Cold backup of the whole data folder | accepted |
 | D-006 | The API sees all visitors at the front end's address in v1 | accepted |
+| D-007 | MIT for the packaging; openGym stays AGPL and its exercise media stay under Gym visual's terms, carried unmodified with upstream's notices | accepted |
 
 ## Spikes
 

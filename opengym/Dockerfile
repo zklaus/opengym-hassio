@@ -27,7 +27,18 @@ ENV NODE_ENV=production \
     RESOLVER=127.0.0.1
 
 ARG BUILD_VERSION=dev
+ARG BUILD_ARCH=unknown
+# What Home Assistant expects to find on an add-on image.
+LABEL io.hass.type="addon" \
+      io.hass.version="$BUILD_VERSION" \
+      io.hass.arch="$BUILD_ARCH" \
+      org.opencontainers.image.source="https://github.com/zklaus/opengym-hassio" \
+      org.opencontainers.image.description="openGym, unmodified, packaged as a Home Assistant add-on" \
+      org.opencontainers.image.licenses="AGPL-3.0-or-later AND MIT"
 RUN mkdir -p /opt/opengym-addon && printf '%s\n' "$BUILD_VERSION" > /opt/opengym-addon/version
+# openGym's licence and notices travel with the image (decisions/007). The exercise media
+# keep their own notice where upstream put it, in the web root.
+COPY upstream/LICENSE upstream/NOTICE.md /usr/share/doc/opengym/
 COPY --chmod=755 run.sh /opt/opengym-addon/run.sh
 COPY settings.mjs /opt/opengym-addon/settings.mjs
 

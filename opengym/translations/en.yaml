@@ -1,0 +1,23 @@
+configuration:
+  public_address:
+    name: Public address
+    description: >-
+      The https address people open openGym at, for example https://gym.example.org.
+      Required. It must be a hostname of its own (not an IP address, nothing after the
+      hostname) that your HTTPS front end forwards to this add-on. Passkeys are tied to it:
+      if you change it later, everyone has to register a new passkey.
+  invite_only:
+    name: Invitation only
+    description: >-
+      When on, a new profile can only be created with an invitation from the administrator.
+      Leave it off until you have created your own profile, then turn it on.
+  password_login:
+    name: Password sign-in
+    description: >-
+      Lets people set a password in addition to their passkey. Off by default; passkeys are
+      the safer choice. Wrong passwords are throttled for the household as a whole.
+  notification_contact:
+    name: Contact for notification services
+    description: >-
+      Optional e-mail address given to the push services that deliver notifications, in case
+      they need to reach whoever runs this server. If empty, they are given the public address.

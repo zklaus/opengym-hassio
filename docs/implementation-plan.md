@@ -62,24 +62,30 @@ M3 to M6 a local add-on folder on the Green remains available (D-003).
 ### M2 Published
 
 Prepared locally first; creating the repository and every push are the owner's, or done on
-the owner's explicit go-ahead for that one push (nothing is pushed otherwise).
+the owner's explicit go-ahead for that one push (nothing is pushed otherwise). Names used:
+repository `zklaus/opengym-hassio`, image `ghcr.io/zklaus/opengym-addon`.
 
-- [ ] `repository.yaml` at the root; the root `README.md` says what this is and that it is
-      not ready (FR-1)
-- [ ] `opengym/README.md`, `opengym/CHANGELOG.md` naming the openGym release,
-      `opengym/icon.png`, `opengym/logo.png` (FR-1, DR-1)
-- [ ] `opengym/DOCS.md`, first version: the ten-minute path, with the NGINX server block
+- [x] `repository.yaml` at the root; the root `README.md` says what this is and that it is
+      not ready; `LICENSE` (MIT) and upstream's licence and notices in `opengym/upstream/`
+      and in the image (FR-1, DR-1, D-007)
+- [x] `opengym/README.md`, `opengym/CHANGELOG.md` naming the openGym release,
+      `opengym/icon.png`, `opengym/logo.png` (sources in `assets/`) (FR-1, DR-1)
+- [x] `opengym/DOCS.md`, first version: the ten-minute path, with the NGINX server block
       marked as untested until M3 (FR-1, SC-1)
-- [ ] `opengym/translations/en.yaml`: names and help texts for the options (FR-1)
-- [ ] Workflow on pull requests and pushes: `scripts/check-trace.sh` and `tests/run.sh`
-      (DR-1, SR-1)
-- [ ] Workflow on release: build for aarch64 (native runner) and amd64, run `tests/run.sh`
-      on both, push to ghcr.io under the add-on version; `image:` in `config.yaml`
-      (POR-1, DR-1, D-003)
-- [ ] The order "image first, version bump second" made impossible to get wrong: the
-      workflow refuses a `config.yaml` version whose image it has not pushed (POR-1, D-003)
-- [ ] Owner: create the repository under the owner's account; first push; make the image on
-      ghcr.io public if it starts private (FR-1, D-003)
+- [x] `opengym/translations/en.yaml`: names and help texts for the options (FR-1)
+- [x] `.github/workflows/ci.yml`, on pull requests and pushes to main:
+      `scripts/check-trace.sh` and `tests/run.sh` (DR-1, SR-1)
+- [x] `.github/workflows/publish.yml`, started by hand on the branch carrying a new version:
+      build for aarch64 (native runner) and amd64, run `tests/run.sh` on both, push to
+      ghcr.io under the add-on version; `image:` in `config.yaml` (POR-1, DR-1, D-003)
+- [x] The order "image first, version bump second": the publish workflow refuses to replace
+      a published version, and CI fails when the version in `config.yaml` has no published
+      image (`scripts/addon-image.sh`) (POR-1, D-003)
+- [ ] Owner: create the repository under the owner's account; first push (FR-1, D-003)
+- [ ] Owner: run "Publish image" once; make the image on ghcr.io public if it starts
+      private; CI on main then turns green (POR-1, D-003)
+- [ ] Owner, once CI is green: make "Image for this version is published" a required check
+      on main, so a version without an image cannot be merged (POR-1, D-003)
 - [ ] From the workstation: pull the published aarch64 and amd64 images by tag and compare
       them with upstream's, as `tests/run.sh` does (DR-1)
 
@@ -140,8 +146,9 @@ the owner's explicit go-ahead for that one push (nothing is pushed otherwise).
 
 ### M8 Upstream releases are followed
 
-- [ ] Workflow: notice a new upstream release, prepare the digest and version bump and the
-      changelog entry for the owner to review (SC-3, DR-1)
+- [ ] Workflow: notice a new upstream release, prepare the digest and version bump, the
+      refreshed `opengym/upstream/` files and the changelog entry for the owner to review
+      (SC-3, DR-1, D-007)
 - [ ] Until then, follow upstream by hand; openGym 1.4.6 is the first practice run
       (SC-3, RR-1)
 
