@@ -233,14 +233,28 @@ For the owner: none open. Answered on 2026-11-23 (D-003): the repository will li
 owner's own GitHub account for now and stays local until something needs CI; nothing is
 pushed or published before the owner says so.
 
-To be confirmed on the device, at the first on-device milestone:
+Confirmed on the owner's Green on 2026-11-23 (M3):
 
-2. D-002: the add-on's hostname resolves from the NGINX add-on, and the watchdog reaches an
-   unpublished port.
-3. D-004: whether the Watchdog switch has to be turned on by the owner (if so, reword
-   SR-1's fourth criterion and make it an installation step).
-4. D-003: Home Assistant's ordering of `X.Y.Z-n` versions.
-5. The NGINX add-on's server block and certificate for the openGym hostname.
+- The add-on installs from the published repository; the Green pulls the image (POR-1).
+- Starting without `public_address` is refused by Home Assistant itself, with a pop-up that
+  names the option and offers a button to the configuration (FR-1).
+- With the option set, the add-on starts and logs its version line (SR-1).
+- The add-on's hostname resolves from the NGINX add-on, and the server block of DOCS.md
+  works with a wildcard certificate: `/api/health` answers at the public address
+  (D-002, FR-2). Uploads and streamed answers through the block are still to be tried.
+
+- No openGym port is reachable from the home network: ports 3000 and 8080 on the Green
+  show as closed from another machine (FR-2, D-002).
+- The Watchdog switch is off after installation and has to be turned on by the owner
+  (D-004; SR-1 reworded). With it on, the Supervisor log shows no complaint about reaching
+  the unpublished port; an actual restart of a hung add-on has not been provoked on the
+  device.
+
+Still to be confirmed on the device:
+
+1. D-003: Home Assistant's ordering of `X.Y.Z-n` versions (M7, with the first store update).
+2. Uploads up to the size limit and streamed AI Coach answers through the NGINX block
+   (M4, M5).
 
 ## Traceability
 

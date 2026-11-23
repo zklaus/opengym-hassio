@@ -17,7 +17,7 @@ Each milestone ends in something that can be shown. "Where" says who can do it.
 |---|---|---|---|
 | M1 | The image builds and the start script behaves | workstation | done: `tests/run.sh` passes |
 | M2 | Published | GitHub, owner's go-ahead for every push | done 2026-11-23, except the optional required check: the repository is public; CI tests and pushes the image for aarch64 and amd64 to ghcr.io; the repository can be added to an add-on store |
-| M3 | Installed on the Green, first workout | Green, owner | add-on installed from the published repository, reachable at the public address through the NGINX add-on, passkey sign-in, a workout logged; the on-device questions of architecture.md answered |
+| M3 | Installed on the Green, first workout | Green, owner | done 2026-11-23 (SC-1 not timed): add-on installed from the published repository, reachable at the public address through the NGINX add-on, passkey sign-in, a workout logged; the on-device questions of architecture.md answered |
 | M4 | The Android app and notifications | Green, owner | the app is paired, syncs at home and on mobile data, and stays paired across an add-on restart; a rest-timer notification arrives with the screen off |
 | M5 | The AI Coach | Green, owner | connected with an Anthropic API key, a plan proposed and applied |
 | M6 | Household and watches | Green, owner | a second profile created by invitation and isolated from the first; the Garmin and Samsung watch apps sync |
@@ -97,17 +97,23 @@ repository `zklaus/opengym-hassio`, image `ghcr.io/zklaus/opengym-addon`.
 
 ### M3 Installed on the Green, first workout
 
-- [ ] Add the repository in the add-on store, install, set the public address (FR-1, POR-1)
-- [ ] Server block for the NGINX add-on: own hostname, certificate, 112 MB bodies, no
-      response buffering, 300 s reads; corrected in DOCS.md once it works (FR-2)
-- [ ] Answer on the device and record in architecture.md: hostname resolves from the NGINX
+- [x] Add the repository in the add-on store, install, set the public address (FR-1, POR-1).
+      Done 2026-11-23; a missing public address is refused by Home Assistant with a pop-up.
+- [x] Server block for the NGINX add-on: own hostname, certificate, 112 MB bodies, no
+      response buffering, 300 s reads; corrected in DOCS.md once it works (FR-2). Works as
+      written, 2026-11-23, with a wildcard certificate; uploads and streaming are tried in
+      M4 and M5.
+- [x] Answer on the device and record in architecture.md: hostname resolves from the NGINX
       add-on; watchdog reaches an unpublished port; whether the Watchdog switch is manual
       (then reword SR-1); a missing public address is refused by Home Assistant itself
-      (FR-2, SR-1, D-002, D-004)
-- [ ] Passkey registration and sign-in on the phone, first workout; time it (FR-2, SC-1)
-- [ ] The first profile is the administrator; switch sign-up to invitation only straight
-      away, since the address is public from this point on (FR-4)
-- [ ] From a second device on the home network: no openGym listener reachable (FR-2)
+      (FR-2, SR-1, D-002, D-004). Done 2026-11-23; the switch is manual, SR-1 reworded.
+- [x] Passkey registration and sign-in on the phone, first workout; time it (FR-2, SC-1).
+      Done 2026-11-23; not timed, so SC-1 is still to be measured on a fresh run.
+- [x] The first profile is the administrator; switch sign-up to invitation only straight
+      away, since the address is public from this point on (FR-4). Done 2026-11-23; still
+      signed in after the restart.
+- [x] From a second device on the home network: no openGym listener reachable (FR-2).
+      Done 2026-11-23: ports 3000 and 8080 closed.
 
 ### M4 The Android app and notifications
 

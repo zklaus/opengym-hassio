@@ -3,15 +3,20 @@
 openGym, unmodified, at an HTTPS address of its own. This page takes you from installation
 to a first workout, then explains the options and the messages in the log.
 
-> **Status:** written before the first installation on a real device. The reverse proxy
-> example below has not been tried yet.
+> **Status:** installation and the reverse proxy example below have been tried on one Home
+> Assistant Green with the NGINX Home Assistant SSL proxy add-on and a wildcard certificate.
+> Large uploads and the AI Coach through the proxy have not been tried yet.
 
 ## What you need first
 
 - An HTTPS reverse proxy running **on this Home Assistant device**. The example here uses the
   official *NGINX Home Assistant SSL proxy* add-on.
 - A hostname for openGym alone, for example `gym.example.org`, pointing to your home the same
-  way your Home Assistant hostname does, and a certificate that covers it.
+  way your Home Assistant hostname does. A CNAME record to the Home Assistant hostname is the
+  simplest: a changing home address then needs updating in one place only.
+- A certificate that covers that hostname. A wildcard certificate (`*.example.org`) already
+  does, if openGym's hostname is directly under it. Otherwise add the hostname to the
+  certificate you have; with the Let's Encrypt add-on that is one more entry in `domains`.
 
 openGym cannot be opened inside the Home Assistant sidebar, and it has no port on your home
 network. That is on purpose: passkeys and the phone and watch apps need one stable HTTPS

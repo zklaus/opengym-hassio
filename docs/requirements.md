@@ -156,8 +156,11 @@ Serves: UC-9, UC-2, UC-4
   than run without saving.
 - WHEN the add-on starts THE SYSTEM SHALL write to the log the openGym version it carries and
   the public address it is configured for.
-- WHEN openGym stops answering while the add-on still appears started THE SYSTEM SHALL be
-  restarted by Home Assistant without action by the owner.
+- WHEN openGym stops answering while the add-on still appears started, and the owner has
+  turned on the add-on's Watchdog, THE SYSTEM SHALL be restarted by Home Assistant without
+  further action by the owner. (Reworded 2026-11-23: on the device the Watchdog switch is
+  off by default and only the owner can turn it on, so it is an installation step; see
+  decisions/004.)
 - WHEN the owner opens the add-on's log in Home Assistant THE SYSTEM SHALL show the messages
   of every part of openGym there, with no second place to look.
 

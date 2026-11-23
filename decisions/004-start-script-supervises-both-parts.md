@@ -40,5 +40,6 @@ the other and exits, non-zero in the first case. Restarting is left to Home Assi
   signal, which the script at first ignored, so a stop ran into the timeout. The image now
   declares SIGTERM and the script handles both.
 - Home Assistant restarts a crashed or unresponsive add-on only if the add-on's Watchdog
-  switch is on, and that switch is the owner's. [NEEDS CLARIFICATION: confirm on the device;
-  if so, turning it on becomes an installation step and SR-1's fourth criterion is reworded.]
+  switch is on, and that switch is the owner's. Confirmed on the owner's Green on
+  2026-11-23: the switch is off after installation. Turning it on is step 2 of the
+  installation in DOCS.md, and SR-1's fourth criterion is reworded accordingly.
