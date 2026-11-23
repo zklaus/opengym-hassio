@@ -41,6 +41,9 @@ release; nothing is released without the owner.
   GitHub account for now, and the repository stays local until there is something that
   needs CI. Until then the add-on is built from a local add-on folder (see Alternatives:
   development). The repository name is chosen when it is created.
+  Revised by the owner later the same day: publishing moves ahead of the on-device work
+  (implementation-plan.md, M2), so that the Green pulls the CI-built image from the first
+  install. The local add-on folder remains for quick fixes only.
 - If the version bump reaches the default branch before the image exists, every Green
   offered the update fails to install it. The workflow must make that order impossible.
 - amd64 is built because upstream publishes it and it costs nothing, but only the Green is
