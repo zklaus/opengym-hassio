@@ -120,5 +120,7 @@ From developers.home-assistant.io on 2026-10-13.
 
 ## Housekeeping
 
+- The repository is github.com/zklaus/opengym-hassio (public since 2026-11-23); issue and
+  pull request numbers refer to it. The image is ghcr.io/zklaus/opengym-addon.
 - Nothing here is pushed or published until the owner says so.
 - Do not modify the openGym clone from this repository. Upstream changes are proposed upstream.

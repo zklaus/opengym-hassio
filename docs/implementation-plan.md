@@ -16,7 +16,7 @@ Each milestone ends in something that can be shown. "Where" says who can do it.
 | | Milestone | Where | Done when |
 |---|---|---|---|
 | M1 | The image builds and the start script behaves | workstation | done: `tests/run.sh` passes |
-| M2 | Published | GitHub, owner's go-ahead for every push | the repository is public; CI tests and pushes the image for aarch64 and amd64 to ghcr.io; the repository can be added to an add-on store |
+| M2 | Published | GitHub, owner's go-ahead for every push | done 2026-11-23, except the optional required check: the repository is public; CI tests and pushes the image for aarch64 and amd64 to ghcr.io; the repository can be added to an add-on store |
 | M3 | Installed on the Green, first workout | Green, owner | add-on installed from the published repository, reachable at the public address through the NGINX add-on, passkey sign-in, a workout logged; the on-device questions of architecture.md answered |
 | M4 | The Android app and notifications | Green, owner | the app is paired, syncs at home and on mobile data, and stays paired across an add-on restart; a rest-timer notification arrives with the screen off |
 | M5 | The AI Coach | Green, owner | connected with an Anthropic API key, a plan proposed and applied |
@@ -81,13 +81,19 @@ repository `zklaus/opengym-hassio`, image `ghcr.io/zklaus/opengym-addon`.
 - [x] The order "image first, version bump second": the publish workflow refuses to replace
       a published version, and CI fails when the version in `config.yaml` has no published
       image (`scripts/addon-image.sh`) (POR-1, D-003)
-- [ ] Owner: create the repository under the owner's account; first push (FR-1, D-003)
-- [ ] Owner: run "Publish image" once; make the image on ghcr.io public if it starts
-      private; CI on main then turns green (POR-1, D-003)
+- [x] Owner: create the repository under the owner's account; first push (FR-1, D-003).
+      Done 2026-11-23.
+- [x] Owner: run "Publish image" once; make the image on ghcr.io public if it starts
+      private (POR-1, D-003). Done 2026-11-23: both architectures built, tested and pushed
+      as `1.4.5-1`; the image can be read without credentials.
+- [x] Re-run CI on main: its first run failed as designed, because it ran before the image
+      existed (POR-1, D-003). Green on 2026-11-23.
 - [ ] Owner, once CI is green: make "Image for this version is published" a required check
       on main, so a version without an image cannot be merged (POR-1, D-003)
-- [ ] From the workstation: pull the published aarch64 and amd64 images by tag and compare
-      them with upstream's, as `tests/run.sh` does (DR-1)
+- [x] From the workstation: pull the published image by tag and compare it with upstream's,
+      as `tests/run.sh` does (DR-1). Done 2026-11-23 for amd64: identical. aarch64 cannot be
+      run on the workstation; its evidence is the publish run, where the same comparison
+      passed on a native arm64 runner immediately before the push.
 
 ### M3 Installed on the Green, first workout
 
