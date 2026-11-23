@@ -1,0 +1,25 @@
+# Home Assistant add-on manifest (docs/architecture.md C1).
+name: openGym
+# openGym release, then a packaging counter (decisions/003).
+version: "1.4.5-1"
+slug: opengym
+description: Self-hosted gym and body-weight tracker, served at its own HTTPS address
+url: https://github.com/DuarteSantos8/openGym
+arch:
+  - aarch64
+  - amd64
+init: true
+# No `ports` and no `ingress`, on purpose: openGym is reached only through the HTTPS front
+# end on this device, over the internal add-on network, port 8080 (decisions/002).
+# Stopped for the seconds a backup takes, so the copy is consistent (decisions/005).
+backup: cold
+watchdog: http://[HOST]:[PORT:8080]/api/health
+options:
+  invite_only: false
+  password_login: false
+schema:
+  # Required and without a default: the add-on cannot start until it is filled in.
+  public_address: url
+  invite_only: bool
+  password_login: bool
+  notification_contact: email?

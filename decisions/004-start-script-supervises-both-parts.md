@@ -36,6 +36,9 @@ the other and exits, non-zero in the first case. Restarting is left to Home Assi
   and the tests above must cover exactly these two cases.
 - nginx can only write to the container's output after the script hands the output streams
   to nginx's user (also found in the spike).
+- Found while implementing, 2026-11-23: upstream's web image declares SIGQUIT as its stop
+  signal, which the script at first ignored, so a stop ran into the timeout. The image now
+  declares SIGTERM and the script handles both.
 - Home Assistant restarts a crashed or unresponsive add-on only if the add-on's Watchdog
   switch is on, and that switch is the owner's. [NEEDS CLARIFICATION: confirm on the device;
   if so, turning it on becomes an installation step and SR-1's fourth criterion is reworded.]

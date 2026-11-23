@@ -6,7 +6,8 @@ Working conventions for this repository. They apply to humans and to Claude Code
 
 A Home Assistant add-on packaging of openGym (upstream: `~/src/openGym`, a clone of
 github.com/DuarteSantos8/openGym). Target device: Home Assistant Green (aarch64, 4 GB RAM,
-Home Assistant OS). The add-on code will live under `opengym/`; it does not exist yet.
+Home Assistant OS). The add-on code lives under `opengym/`; `tests/run.sh` builds the image
+and checks it (needs Docker, about 3 minutes).
 
 ## Spec-driven: the rules
 
