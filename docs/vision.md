@@ -92,6 +92,9 @@ These are out of scope. Each one could be a separate project later.
   the native and watch apps cannot use it. Decided 2026-11-23; existing add-ons cover it.
 - **No plain-HTTP access.** Not on the LAN either. Decided 2026-11-23: HTTPS is already set
   up on the owner's Home Assistant, and the apps matter more than LAN convenience.
+- **No HTTPS front end on another machine.** The reverse proxy (or tunnel) runs on the same
+  Home Assistant device as the add-on. A front end elsewhere on the network would need the
+  add-on to accept plain HTTP from the LAN. Decided 2026-11-23 (requirements.md, FR-2).
 - **No webhooks in v1.** Upstream's webhook integration stays off; exposing it as an option
   is a candidate for later.
 
