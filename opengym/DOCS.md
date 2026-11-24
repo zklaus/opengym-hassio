@@ -5,7 +5,8 @@ to a first workout, then explains the options and the messages in the log.
 
 > **Status:** installation and the reverse proxy example below have been tried on one Home
 > Assistant Green with the NGINX Home Assistant SSL proxy add-on and a wildcard certificate.
-> Large uploads and the AI Coach through the proxy have not been tried yet.
+> Photo and video uploads and notifications work through it. The AI Coach through the
+> proxy has not been tried yet.
 
 ## What you need first
 

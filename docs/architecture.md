@@ -241,7 +241,11 @@ Confirmed on the owner's Green on 2026-11-23 (M3):
 - With the option set, the add-on starts and logs its version line (SR-1).
 - The add-on's hostname resolves from the NGINX add-on, and the server block of DOCS.md
   works with a wildcard certificate: `/api/health` answers at the public address
-  (D-002, FR-2). Uploads and streamed answers through the block are still to be tried.
+  (D-002, FR-2).
+- On 2026-11-24 (M4): a photo and a video of a custom exercise upload through the block,
+  and a rest-timer notification sent by the server arrives in the phone's browser with
+  the screen off (FR-2). The app shrinks videos before uploading, so an upload near the
+  112 MB limit has not been tried.
 
 - No openGym port is reachable from the home network: ports 3000 and 8080 on the Green
   show as closed from another machine (FR-2, D-002).
@@ -253,8 +257,7 @@ Confirmed on the owner's Green on 2026-11-23 (M3):
 Still to be confirmed on the device:
 
 1. D-003: Home Assistant's ordering of `X.Y.Z-n` versions (M7, with the first store update).
-2. Uploads up to the size limit and streamed AI Coach answers through the NGINX block
-   (M4, M5).
+2. Streamed AI Coach answers through the NGINX block (M5).
 
 ## Traceability
 

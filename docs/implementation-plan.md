@@ -18,7 +18,7 @@ Each milestone ends in something that can be shown. "Where" says who can do it.
 | M1 | The image builds and the start script behaves | workstation | done: `tests/run.sh` passes |
 | M2 | Published | GitHub, owner's go-ahead for every push | done 2026-11-23, except the optional required check: the repository is public; CI tests and pushes the image for aarch64 and amd64 to ghcr.io; the repository can be added to an add-on store |
 | M3 | Installed on the Green, first workout | Green, owner | done 2026-11-23 (SC-1 not timed): add-on installed from the published repository, reachable at the public address through the NGINX add-on, passkey sign-in, a workout logged; the on-device questions of architecture.md answered |
-| M4 | The Android app and notifications | Green, owner | the app is paired, syncs at home and on mobile data, and stays paired across an add-on restart; a rest-timer notification arrives with the screen off |
+| M4 | The Android app and notifications | Green, owner | done 2026-11-24 (reminder on a planned day not yet seen; contact option check skipped): the app is paired, syncs at home and on mobile data, and stays paired across an add-on restart; a rest-timer notification arrives with the screen off |
 | M5 | The AI Coach | Green, owner | connected with an Anthropic API key, a plan proposed and applied |
 | M6 | Household and watches | Green, owner | a second profile created by invitation and isolated from the first; the Garmin and Samsung watch apps sync |
 | M7 | Data survives | Green, owner | reboot, backup and restore, and a store update keep everything; memory measured |
@@ -117,17 +117,25 @@ repository `zklaus/opengym-hassio`, image `ghcr.io/zklaus/opengym-addon`.
 
 ### M4 The Android app and notifications
 
-- [ ] Pair the Android app with a one-time code from the signed-in browser (FR-3)
-- [ ] Log a workout in the app at home, and one on mobile data away from home; both appear
-      in the browser (FR-3)
-- [ ] Restart the add-on: the app syncs without re-pairing (FR-3, RR-1)
-- [ ] Upload a photo and a video of a custom exercise through the front end (FR-2, RR-1)
-- [ ] Notifications from the server: in the phone's browser, enable them; a rest-timer
+- [x] Pair the Android app with a one-time code from the signed-in browser (FR-3).
+      Done 2026-11-24, with the APK from upstream's release page; a workout logged in the
+      app shows in the browser.
+- [x] Log a workout in the app at home, and one on mobile data away from home; both appear
+      in the browser (FR-3). Done 2026-11-24.
+- [x] Restart the add-on: the app syncs without re-pairing (FR-3, RR-1). Done 2026-11-24.
+- [x] Upload a photo and a video of a custom exercise through the front end (FR-2, RR-1).
+      Done 2026-11-24; the app shrinks videos, so nothing near 112 MB was sent.
+- [x] Notifications from the server: in the phone's browser, enable them; a rest-timer
       notification arrives with the screen off, and a training-day reminder on a planned
       day. (The Android app raises its own rest-timer and reminder notifications on the
-      phone; the server's are what the add-on has to get right.) (FR-2)
-- [ ] The same in the Android app: rest-timer alert with the screen off (FR-2, FR-3)
-- [ ] With `notification_contact` set, restart and check notifications still arrive (FR-2)
+      phone; the server's are what the add-on has to get right.) (FR-2). Rest timer done
+      2026-11-24; the training-day reminder is still to be seen on a planned day.
+- [x] The same in the Android app: rest-timer alert with the screen off (FR-2, FR-3).
+      Done 2026-11-24.
+- [ ] ~~With `notification_contact` set, restart and check notifications still arrive~~
+      (FR-2). Skipped by the owner on 2026-11-24: the option stays empty on the Green.
+      `tests/run.sh` checks that the option reaches openGym; delivery with it set is
+      untested.
 
 ### M5 The AI Coach
 
