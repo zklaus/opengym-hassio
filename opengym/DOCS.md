@@ -5,8 +5,7 @@ to a first workout, then explains the options and the messages in the log.
 
 > **Status:** installation and the reverse proxy example below have been tried on one Home
 > Assistant Green with the NGINX Home Assistant SSL proxy add-on and a wildcard certificate.
-> Photo and video uploads and notifications work through it. The AI Coach through the
-> proxy has not been tried yet.
+> The phone app, photo and video uploads, notifications and the AI Coach work through it.
 
 ## What you need first
 
@@ -87,6 +86,31 @@ address.
 In the browser, signed in: *Settings → Account → Pair the mobile app* shows a one-time code.
 Enter the public address and that code in the openGym app. Watches connect through the phone
 app as openGym's own documentation describes.
+
+## AI Coach
+
+Optional, and off until the administrator sets it up. The Coach sends training data to an AI
+provider of your choice and proposes plans from it. In this add-on it works with a provider
+key (Anthropic, OpenAI, Google Gemini and others, or a model server of your own). The steps
+for Anthropic:
+
+1. Create an API key in the Anthropic Console (platform.claude.com). Buy a small amount of
+   credit and leave automatic top-up off: the credit is then the most that can be spent.
+2. In openGym: *Settings → Account → Admin dashboard*, the *AI Coach* card. Switch it on,
+   choose **Anthropic API** (not *Claude (Anthropic)*, which this add-on cannot run), paste
+   the key, use *List models* to pick a model, then *Test the Coach*.
+3. Each person opens *Plan → Coach*, agrees to the consent screen and answers a few
+   questions.
+
+Worth knowing before you switch it on:
+
+- **What leaves your device.** For a person who agreed: their plan, logged training, body
+  weight, the answers they gave the Coach and whatever they type to it, sent to the provider
+  under a pseudonym. Never names, sign-in data or another person's data. The consent screen
+  lists it exactly, and openGym's own documentation (docs/AI_COACH.md) has the details.
+- **One key for everybody.** Every profile uses the administrator's key and so the
+  administrator's money. The daily limits on the same card bound it.
+- **The key is stored on this device**, encrypted, and is part of backups (see below).
 
 ## Backups
 

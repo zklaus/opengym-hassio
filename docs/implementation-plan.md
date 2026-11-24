@@ -19,7 +19,7 @@ Each milestone ends in something that can be shown. "Where" says who can do it.
 | M2 | Published | GitHub, owner's go-ahead for every push | done 2026-11-23, except the optional required check: the repository is public; CI tests and pushes the image for aarch64 and amd64 to ghcr.io; the repository can be added to an add-on store |
 | M3 | Installed on the Green, first workout | Green, owner | done 2026-11-23 (SC-1 not timed): add-on installed from the published repository, reachable at the public address through the NGINX add-on, passkey sign-in, a workout logged; the on-device questions of architecture.md answered |
 | M4 | The Android app and notifications | Green, owner | done 2026-11-24 (reminder on a planned day not yet seen; contact option check skipped): the app is paired, syncs at home and on mobile data, and stays paired across an add-on restart; a rest-timer notification arrives with the screen off |
-| M5 | The AI Coach | Green, owner | connected with an Anthropic API key, a plan proposed and applied |
+| M5 | The AI Coach | Green, owner | done 2026-11-24: connected with an Anthropic API key, a plan proposed and applied |
 | M6 | Household and watches | Green, owner | a second profile created by invitation and isolated from the first; the Garmin and Samsung watch apps sync |
 | M7 | Data survives | Green, owner | reboot, backup and restore, and a store update keep everything; memory measured |
 | M8 | Upstream releases are followed | GitHub | a new upstream release produces a prepared update for the owner to release |
@@ -139,11 +139,12 @@ repository `zklaus/opengym-hassio`, image `ghcr.io/zklaus/opengym-addon`.
 
 ### M5 The AI Coach
 
-- [ ] Create an Anthropic API key with a spend limit; connect it on the administrator's AI
-      Coach card, choose a model, "Test the Coach" (DR-1)
-- [ ] Go through the intake, get a plan proposed and apply it; check that answers stream
-      through the front end without stalling (FR-2)
-- [ ] Write the DOCS.md section: the steps, what leaves the device, that the key is shared
+- [x] Create an Anthropic API key with a spend limit; connect it on the administrator's AI
+      Coach card, choose a model, "Test the Coach" (DR-1). Done 2026-11-24.
+- [x] Go through the intake, get a plan proposed and apply it; check that answers stream
+      through the front end without stalling (FR-2). Done 2026-11-24: plan proposed and
+      applied without a stall; whether the text arrived piece by piece was not noted.
+- [x] Write the DOCS.md section: the steps, what leaves the device, that the key is shared
       by all profiles and is in backups (FR-1, DR-1)
 
 ### M6 Household and watches

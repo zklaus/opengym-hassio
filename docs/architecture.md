@@ -246,6 +246,9 @@ Confirmed on the owner's Green on 2026-11-23 (M3):
   and a rest-timer notification sent by the server arrives in the phone's browser with
   the screen off (FR-2). The app shrinks videos before uploading, so an upload near the
   112 MB limit has not been tried.
+- On 2026-11-24 (M5): the AI Coach with an Anthropic API key works on the unchanged
+  image: the container reaches the provider, and a plan is proposed and applied through
+  the block (DR-1, FR-2). Deleting data in the browser also empties the paired app (FR-3).
 
 - No openGym port is reachable from the home network: ports 3000 and 8080 on the Green
   show as closed from another machine (FR-2, D-002).
@@ -257,7 +260,6 @@ Confirmed on the owner's Green on 2026-11-23 (M3):
 Still to be confirmed on the device:
 
 1. D-003: Home Assistant's ordering of `X.Y.Z-n` versions (M7, with the first store update).
-2. Streamed AI Coach answers through the NGINX block (M5).
 
 ## Traceability
 
