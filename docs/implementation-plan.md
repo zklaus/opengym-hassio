@@ -20,10 +20,11 @@ Each milestone ends in something that can be shown. "Where" says who can do it.
 | M3 | Installed on the Green, first workout | Green, owner | done 2026-11-23 (SC-1 not timed): add-on installed from the published repository, reachable at the public address through the NGINX add-on, passkey sign-in, a workout logged; the on-device questions of architecture.md answered |
 | M4 | The Android app and notifications | Green, owner | done 2026-11-24 (reminder on a planned day not yet seen; contact option check skipped): the app is paired, syncs at home and on mobile data, and stays paired across an add-on restart; a rest-timer notification arrives with the screen off |
 | M5 | The AI Coach | Green, owner | done 2026-11-24: connected with an Anthropic API key, a plan proposed and applied |
-| M6 | Household and watches | Green, owner | a second profile created by invitation and isolated from the first; the Garmin and Samsung watch apps sync |
+| M6 | Household and a watch | Green, owner | done 2026-11-24: a second profile created by invitation and isolated from the first; the Garmin watch app syncs (the Samsung watch moved to M10) |
 | M7 | Data survives | Green, owner | reboot, backup and restore, and a store update keep everything; memory measured |
 | M8 | Upstream releases are followed | GitHub | a new upstream release produces a prepared update for the owner to release |
-| M9 | Verified | Green, owner | every row of verification.md has a result (Phase 4) |
+| M9 | Verified | Green, owner | every row of verification.md has a result (Phase 4); the Samsung watch may still read "M10" |
+| M10 | The Samsung watch | owner | the Wear OS app is connected and a workout logged on it appears in the browser |
 
 Why publishing comes second: the Green then pulls the image CI built from the first install
 on, so POR-1 ("nothing assembled on the device") and the store update in M5 are tested as
@@ -149,12 +150,14 @@ repository `zklaus/opengym-hassio`, image `ghcr.io/zklaus/opengym-addon`.
 
 ### M6 Household and watches
 
-- [ ] Issue an invitation; a second person creates their profile with it; without an
-      invitation it is refused (FR-4)
-- [ ] Neither profile sees the other's data; the administrator sees both accounts and can
-      disable the second (FR-4)
-- [ ] Connect the Garmin and the Samsung watch apps; a workout logged on a watch appears in
-      the browser. iPhone app if at hand (FR-3)
+- [x] Issue an invitation; a second person creates their profile with it; without an
+      invitation it is refused (FR-4). Done 2026-11-24; the second profile can also use
+      the AI Coach on the administrator's key.
+- [x] Neither profile sees the other's data; the administrator sees both accounts and can
+      disable the second (FR-4). Done 2026-11-24; disabling was offered, not carried out.
+- [x] Connect the Garmin watch app; a workout logged on the watch appears in the browser
+      (FR-3). Done 2026-11-24 with a vívoactive 4. The Samsung watch was moved to M10 by
+      the owner on 2026-11-24; no iPhone at hand.
 
 ### M7 Data survives
 
@@ -177,3 +180,15 @@ repository `zklaus/opengym-hassio`, image `ghcr.io/zklaus/opengym-addon`.
 
 - [ ] Fill "First checked at" and "Result" for every row of verification.md
       (FR-1, FR-2, FR-3, FR-4, RR-1, POR-1, SR-1, DR-1, SC-1, SC-2, SC-3)
+
+### M10 The Samsung watch
+
+Split off from M6 by the owner on 2026-11-24. The watch app has to come from the same source
+as the phone app. With the phone app from the APK that means sideloading the watch APK over
+wireless debugging; with openGym 1.4.6 upstream plans a public Google Play listing with the
+watch app in the watch's own store, which may be the easier moment.
+
+- [ ] Confirm the watch runs Wear OS (Galaxy Watch 4 or newer); otherwise record it as not
+      supported by openGym (FR-3)
+- [ ] Install the Wear OS app from the same source as the phone app and connect it; a
+      workout logged on the watch appears in the browser (FR-3)
