@@ -14,8 +14,10 @@ on:
         required: true
         type: string
 
-# One release at a time.
-concurrency: release
+# One release at a time, and never cut short: a second one waits.
+concurrency:
+  group: release
+  cancel-in-progress: false
 
 permissions:
   contents: read
@@ -46,7 +48,7 @@ jobs:
     needs: check
     permissions:
       contents: read
-      packages: write
+      packages: write # push the image for this architecture
     strategy:
       matrix:
         include:
@@ -76,8 +78,8 @@ jobs:
     needs: build
     runs-on: ubuntu-24.04
     permissions:
-      contents: write
-      packages: write
+      contents: write # commit the version to main, create the GitHub Release
+      packages: write # publish the image under the version
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
