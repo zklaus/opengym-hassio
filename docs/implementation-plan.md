@@ -192,9 +192,10 @@ repository `zklaus/opengym-hassio`, image `ghcr.io/zklaus/opengym-addon`.
       `scripts/upstream-update.sh`: a daily look, one pull request per openGym version,
       tests run inside it. The script was tried locally against openGym 1.4.4; the
       workflow has not run yet.
-- [ ] Owner: allow GitHub Actions to create pull requests (repository Settings → Actions →
+- [x] Owner: allow GitHub Actions to create pull requests (repository Settings → Actions →
       General), push, and start "Upstream release" once by hand: with nothing new it
-      should say so and do nothing (SC-3)
+      should say so and do nothing (SC-3). Done 2026-11-25: the run reported
+      openGym 1.4.5 as both carried and latest, and opened no pull request.
 - [ ] The first real pull request, expected with openGym 1.4.6: review, merge, release
       `1.4.6-1`, update the Green; record the days since upstream's release in the
       changelog (SC-3, RR-1)
@@ -204,8 +205,13 @@ repository `zklaus/opengym-hassio`, image `ghcr.io/zklaus/opengym-addon`.
 
 ### M9 Verified
 
-- [ ] Fill "First checked at" and "Result" for every row of verification.md
-      (FR-1, FR-2, FR-3, FR-4, RR-1, POR-1, SR-1, DR-1, SC-1, SC-2, SC-3)
+- [x] Fill "First checked at" and "Result" for every row of verification.md
+      (FR-1, FR-2, FR-3, FR-4, RR-1, POR-1, SR-1, DR-1, SC-1, SC-2, SC-3). Done
+      2026-11-25: the scriptable rows were run against the published `1.4.5-2` image.
+- [ ] Rows that are not a plain pass, for the owner to close or accept: a restart provoked
+      by the Watchdog (SR-1); what the AI Coach card says about in-container runtimes
+      (DR-1); the phone app and watch against a restored copy (SC-2); the Samsung watch
+      (FR-3, M10); three openGym releases followed (SC-3)
 
 ### M10 The Samsung watch
 
