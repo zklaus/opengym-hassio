@@ -4,10 +4,12 @@ A Home Assistant add-on that packages [openGym](https://github.com/DuarteSantos8
 the self-hosted gym and body-weight tracker, so it runs on Home Assistant OS devices such as
 the Home Assistant Green.
 
-**Status: not ready.** The add-on builds and passes its tests on a workstation, but it has
-not yet run on a Home Assistant device. Do not install it for real use.
+**Status: in use on one device.** The add-on runs on the author's Home Assistant Green,
+behind the NGINX Home Assistant SSL proxy add-on, and has been through restarts, a reboot,
+an update and a backup and restore there. That is the only setup it has been tried on.
+[docs/verification.md](docs/verification.md) lists what was checked and what was not.
 
-To try it anyway: in Home Assistant, Settings → Add-ons → Add-on Store → ⋮ → Repositories, add
+To install it: in Home Assistant, Settings → Add-ons → Add-on Store → ⋮ → Repositories, add
 `https://github.com/zklaus/opengym-hassio`, then install "openGym" and read its Documentation
 tab. You need an HTTPS reverse proxy on the same device.
 

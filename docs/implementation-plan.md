@@ -21,7 +21,7 @@ Each milestone ends in something that can be shown. "Where" says who can do it.
 | M4 | The Android app and notifications | Green, owner | done 2026-11-24 (reminder on a planned day not yet seen; contact option check skipped): the app is paired, syncs at home and on mobile data, and stays paired across an add-on restart; a rest-timer notification arrives with the screen off |
 | M5 | The AI Coach | Green, owner | done 2026-11-24: connected with an Anthropic API key, a plan proposed and applied |
 | M6 | Household and a watch | Green, owner | done 2026-11-24: a second profile created by invitation and isolated from the first; the Garmin watch app syncs (the Samsung watch moved to M10) |
-| M7 | Data survives | Green, owner | reboot, backup and restore, and a store update keep everything; memory measured |
+| M7 | Data survives | Green, owner | done 2026-11-25 (memory measured with two profiles; phone app and watch not tried against the restored copy): reboot, backup and restore, and a store update keep everything; memory measured |
 | M8 | Upstream releases are followed | GitHub | a new upstream release produces a prepared update for the owner to release |
 | M9 | Verified | Green, owner | every row of verification.md has a result (Phase 4); the Samsung watch may still read "M10" |
 | M10 | The Samsung watch | owner | the Wear OS app is connected and a workout logged on it appears in the browser |
@@ -178,8 +178,11 @@ repository `zklaus/opengym-hassio`, image `ghcr.io/zklaus/opengym-addon`.
       confirms how Home Assistant orders `X.Y.Z-n` versions (RR-1, D-003). Done
       2026-11-25: `1.4.5-2` was offered after `1.4.5-1`; data, sign-in and the app's
       pairing intact.
-- [ ] Memory at rest with five profiles, from Home Assistant's add-on statistics (POR-1)
-- [ ] Remove "not ready" from the README (FR-1)
+- [x] Memory at rest with five profiles, from Home Assistant's add-on statistics (POR-1).
+      Done 2026-11-25 with two profiles, by the owner's choice: 51 MB, against a limit
+      of 200 MB.
+- [x] Remove "not ready" from the README (FR-1). Done 2026-11-25: it now says the
+      add-on is in use on one device.
 
 ### M8 Upstream releases are followed
 
