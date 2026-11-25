@@ -1,7 +1,7 @@
 # Home Assistant add-on manifest (docs/architecture.md C1).
 name: openGym
 # openGym release, then a packaging counter (decisions/003).
-version: "1.4.5-1"
+version: "1.4.5-2"
 slug: opengym
 description: Self-hosted gym and body-weight tracker, served at its own HTTPS address
 url: https://github.com/zklaus/opengym-hassio
