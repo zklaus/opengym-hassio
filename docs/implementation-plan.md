@@ -17,7 +17,7 @@ Each milestone ends in something that can be shown. "Where" says who can do it.
 |---|---|---|---|
 | M1 | The image builds and the start script behaves | workstation | done: `tests/run.sh` passes |
 | M2 | Published | GitHub, owner's go-ahead for every push | done 2026-11-23, except the optional required check: the repository is public; CI tests and pushes the image for aarch64 and amd64 to ghcr.io; the repository can be added to an add-on store |
-| M3 | Installed on the Green, first workout | Green, owner | done 2026-11-23 (SC-1 not timed): add-on installed from the published repository, reachable at the public address through the NGINX add-on, passkey sign-in, a workout logged; the on-device questions of architecture.md answered |
+| M3 | Installed on the Green, first workout | Green, owner | done 2026-11-23 (SC-1 accepted later, no time recorded): add-on installed from the published repository, reachable at the public address through the NGINX add-on, passkey sign-in, a workout logged; the on-device questions of architecture.md answered |
 | M4 | The Android app and notifications | Green, owner | done 2026-11-24 (reminder on a planned day not yet seen; contact option check skipped): the app is paired, syncs at home and on mobile data, and stays paired across an add-on restart; a rest-timer notification arrives with the screen off |
 | M5 | The AI Coach | Green, owner | done 2026-11-24: connected with an Anthropic API key, a plan proposed and applied |
 | M6 | Household and a watch | Green, owner | done 2026-11-24: a second profile created by invitation and isolated from the first; the Garmin watch app syncs (the Samsung watch moved to M10) |
@@ -110,7 +110,8 @@ repository `zklaus/opengym-hassio`, image `ghcr.io/zklaus/opengym-addon`.
       (then reword SR-1); a missing public address is refused by Home Assistant itself
       (FR-2, SR-1, D-002, D-004). Done 2026-11-23; the switch is manual, SR-1 reworded.
 - [x] Passkey registration and sign-in on the phone, first workout; time it (FR-2, SC-1).
-      Done 2026-11-23; not timed, so SC-1 is still to be measured on a fresh run.
+      Done 2026-11-23; not timed. SC-1 accepted as met by the owner on 2026-11-25, without
+      a recorded time.
 - [x] The first profile is the administrator; switch sign-up to invitation only straight
       away, since the address is public from this point on (FR-4). Done 2026-11-23; still
       signed in after the restart.
@@ -163,13 +164,20 @@ repository `zklaus/opengym-hassio`, image `ghcr.io/zklaus/opengym-addon`.
 ### M7 Data survives
 
 - [x] Reboot the Green: data, sessions and pairings intact (RR-1, FR-3). Done 2026-11-25.
-- [ ] Backup, restore on a fresh Home Assistant, point the address there (RR-1, SC-2)
+- [x] Backup, restore on a fresh Home Assistant, point the address there (RR-1, SC-2).
+      Done 2026-11-25 in a VM on the owner's laptop (amd64): a partial backup with the
+      two add-ons and `share`, plus one of `ssl` made with `ha backups new --folders ssl`,
+      since the backup screen does not offer that folder on its own. The phone app and
+      watch were not pointed at the copy.
 - [x] Replace "publish on a branch, then merge" by one "Release" workflow on main that
       pushes the image and then writes the version and changelog itself; D-003 revised
       (POR-1, D-003). Prepared 2026-11-25; first used for `1.4.5-2`.
-- [ ] Owner: push main, then run "Release" with version `1.4.5-2` (POR-1, D-003)
-- [ ] Store update from one published version to the next with data present; this also
-      confirms how Home Assistant orders `X.Y.Z-n` versions (RR-1, D-003)
+- [x] Owner: push main, then run "Release" with version `1.4.5-2` (POR-1, D-003).
+      Done 2026-11-25; the workflow succeeded on its first run.
+- [x] Store update from one published version to the next with data present; this also
+      confirms how Home Assistant orders `X.Y.Z-n` versions (RR-1, D-003). Done
+      2026-11-25: `1.4.5-2` was offered after `1.4.5-1`; data, sign-in and the app's
+      pairing intact.
 - [ ] Memory at rest with five profiles, from Home Assistant's add-on statistics (POR-1)
 - [ ] Remove "not ready" from the README (FR-1)
 

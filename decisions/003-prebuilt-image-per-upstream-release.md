@@ -65,4 +65,5 @@ ESPHome); the official and community add-ons do the same across two repositories
   commits would break releases. Commits made by a workflow do not start CI.
 - amd64 is built because upstream publishes it and it costs nothing, but only the Green is
   verified (POR-1).
-- To be confirmed: Home Assistant orders `1.4.5-2` after `1.4.5-1` and before `1.4.6-1`.
+- Confirmed on the Green on 2026-11-25: Home Assistant offers `1.4.5-2` as an update to
+  `1.4.5-1`. That `1.4.6-1` follows `1.4.5-n` is still to be seen with openGym 1.4.6.

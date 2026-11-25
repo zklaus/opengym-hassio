@@ -119,6 +119,12 @@ and pairings. It is stopped for the few seconds a backup takes. After restoring 
 device, point the public address at that device and everything works as before, without
 signing in again.
 
+The other device needs the reverse proxy as well: its add-on, the `share` folder with
+`opengym.conf`, and the certificate in the `ssl` folder. A full backup carries all of them.
+If you pick what to back up, check that the certificate is included; where the backup screen
+does not offer the `ssl` folder, `ha backups new --folders ssl` in a terminal makes a backup
+of it alone.
+
 A backup also contains anything secret that openGym stores, such as an AI Coach provider key,
 together with the key that unlocks it. Treat backups accordingly.
 

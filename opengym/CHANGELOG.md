@@ -3,6 +3,10 @@
 The version is the openGym release, then a counter for changes to the add-on itself.
 Changes that are merged but not yet released are collected under "Unreleased".
 
+## Unreleased
+
+- Documentation: what a restore on another device needs besides the add-on's own backup.
+
 ## 1.4.5-2
 
 - Documentation: a section on setting up the AI Coach; the reverse proxy example is now

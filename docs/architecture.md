@@ -261,7 +261,8 @@ Confirmed on the owner's Green on 2026-11-23 (M3):
 
 Still to be confirmed on the device:
 
-1. D-003: Home Assistant's ordering of `X.Y.Z-n` versions (M7, with the first store update).
+1. D-003: that Home Assistant offers `1.4.6-1` after `1.4.5-n` (with openGym 1.4.6). That
+   `1.4.5-2` follows `1.4.5-1` was confirmed on 2026-11-25, with the first store update.
 
 ## Traceability
 
