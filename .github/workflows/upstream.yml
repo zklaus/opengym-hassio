@@ -1,0 +1,105 @@
+# Notices a new openGym release and prepares the update as a pull request for the owner
+# (decisions/003, SC-3). It never releases anything: after merging, the owner starts the
+# "Release" workflow.
+#
+# Looks once a day. A release counts once both of its images are in the registry. One pull
+# request per openGym version, on the branch upstream-<version>; while that branch exists,
+# nothing more is done for that version.
+#
+# Needs the repository setting "Allow GitHub Actions to create and approve pull requests".
+# GitHub stops scheduled workflows in a repository without activity for 60 days; starting
+# this one by hand (or any push) wakes it again.
+name: Upstream release
+
+on:
+  schedule:
+    - cron: "17 5 * * *"
+  workflow_dispatch:
+
+concurrency: upstream
+
+permissions:
+  contents: read
+
+jobs:
+  update:
+    name: Prepare an update if openGym has a new release
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Is there a release we do not carry?
+        id: look
+        run: |
+          carried=$(scripts/upstream-update.sh carried)
+          latest=$(scripts/upstream-update.sh latest)
+          echo "Carried: $carried. Latest with images: ${latest:-none yet}."
+          if [ -z "$latest" ] || [ "$latest" = "$carried" ]; then exit 0; fi
+          # Only forwards: never prepare a "latest" that is older than what is carried.
+          newest=$(printf '%s\n%s\n' "$carried" "$latest" | sort -V | tail -1)
+          if [ "$newest" != "$latest" ]; then exit 0; fi
+          if git ls-remote --exit-code --heads origin "upstream-$latest" >/dev/null; then
+            echo "The branch upstream-$latest exists already; nothing to do."
+            exit 0
+          fi
+          echo "version=$latest" >> "$GITHUB_OUTPUT"
+          echo "carried=$carried" >> "$GITHUB_OUTPUT"
+      - name: Change the files
+        if: steps.look.outputs.version
+        run: scripts/upstream-update.sh apply "${{ steps.look.outputs.version }}"
+      - name: Test the image with the new openGym
+        # A pull request opened by a workflow does not start CI, so the tests run here and
+        # their result goes into the pull request. A failure is a finding, not a reason to
+        # stay silent: the pull request is opened either way.
+        if: steps.look.outputs.version
+        id: test
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          tests/run.sh 2>&1 | tee "$RUNNER_TEMP/tests.log"
+      - name: Open the pull request
+        if: steps.look.outputs.version
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NEW: ${{ steps.look.outputs.version }}
+          OLD: ${{ steps.look.outputs.carried }}
+          TESTS: ${{ steps.test.outcome }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "upstream-$NEW"
+          git add opengym
+          git commit -m "Carry openGym $NEW"
+          git push origin "upstream-$NEW"
+          if [ "$TESTS" = success ]; then
+            result="**Tests: passed** on amd64 (\`tests/run.sh\`, in the run linked below)."
+          else
+            result="**Tests: FAILED** on amd64. Do not merge as it is. The last lines:
+
+          \`\`\`
+          $(tail -25 "$RUNNER_TEMP/tests.log")
+          \`\`\`"
+          fi
+          cat > "$RUNNER_TEMP/body.md" <<EOF
+          openGym $NEW has been released; the add-on carries $OLD.
+
+          This changes the tag and digests in the Dockerfile, upstream's licence and notices
+          under \`opengym/upstream/\`, and adds a changelog entry. The add-on version is not
+          touched.
+
+          $result
+
+          Before merging:
+
+          - [ ] Read [what changed in openGym $NEW](https://github.com/DuarteSantos8/openGym/releases/tag/v$NEW), looking for new or changed settings, a changed data format, and anything about the images (base image, user, ports, health check).
+          - [ ] Look at the diff of \`opengym/upstream/NOTICE.md\` for changed licence terms.
+          - [ ] If the tests failed, fix the add-on on this branch first. CI does not run by itself on this pull request; closing and reopening it starts CI.
+
+          After merging: start the **Release** workflow on main with version \`$NEW-1\`.
+
+          Prepared by [this run]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID).
+          EOF
+          gh pr create --base main --head "upstream-$NEW" \
+            --title "Carry openGym $NEW" --body-file "$RUNNER_TEMP/body.md"

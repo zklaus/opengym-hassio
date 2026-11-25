@@ -113,8 +113,10 @@ builds the image for both architectures and pushes it to GitHub's container regi
 (ghcr.io); it fails if `/app` or the web root differ from upstream's or if the API does not
 answer in the built image. Only after the push does the same workflow write the version into
 `config.yaml` and the changelog on the default branch and create a GitHub Release. A scheduled
-workflow notices a new upstream release and prepares the version bump and the `CHANGELOG.md`
-entry naming the openGym release; the owner reviews and releases (D-003). Home Assistant
+workflow ("Upstream release") looks once a day for a new openGym release whose images are in
+the registry and opens a pull request with the new tag and digests, upstream's licence and
+notices, the `CHANGELOG.md` entry naming the openGym release, and the result of the image
+tests; the owner reviews, merges and releases (D-003). Home Assistant
 learns of an update from `config.yaml` on the default branch, not from GitHub Releases, so
 the image is always pushed before the version lands there; the GitHub Release is for
 readers. Changes waiting for a release sit under "Unreleased" in the changelog.

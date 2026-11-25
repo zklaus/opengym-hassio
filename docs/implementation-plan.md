@@ -186,11 +186,21 @@ repository `zklaus/opengym-hassio`, image `ghcr.io/zklaus/opengym-addon`.
 
 ### M8 Upstream releases are followed
 
-- [ ] Workflow: notice a new upstream release, prepare the digest and version bump, the
+- [x] Workflow: notice a new upstream release, prepare the digest and version bump, the
       refreshed `opengym/upstream/` files and the changelog entry for the owner to review
-      (SC-3, DR-1, D-007)
-- [ ] Until then, follow upstream by hand; openGym 1.4.6 is the first practice run
-      (SC-3, RR-1)
+      (SC-3, DR-1, D-007). Prepared 2026-11-25 as `.github/workflows/upstream.yml` with
+      `scripts/upstream-update.sh`: a daily look, one pull request per openGym version,
+      tests run inside it. The script was tried locally against openGym 1.4.4; the
+      workflow has not run yet.
+- [ ] Owner: allow GitHub Actions to create pull requests (repository Settings → Actions →
+      General), push, and start "Upstream release" once by hand: with nothing new it
+      should say so and do nothing (SC-3)
+- [ ] The first real pull request, expected with openGym 1.4.6: review, merge, release
+      `1.4.6-1`, update the Green; record the days since upstream's release in the
+      changelog (SC-3, RR-1)
+- [ ] ~~Until then, follow upstream by hand; openGym 1.4.6 is the first practice run~~
+      (SC-3, RR-1). Replaced 2026-11-25 by the task above: the workflow was ready before
+      1.4.6 was released.
 
 ### M9 Verified
 

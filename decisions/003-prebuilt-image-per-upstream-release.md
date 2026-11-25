@@ -33,6 +33,14 @@ version in `config.yaml` by hand, so the default branch cannot name a version wi
 image. This is what the most installed add-ons that are their own store do (Zigbee2MQTT,
 ESPHome); the official and community add-ons do the same across two repositories.
 
+How a new openGym release is noticed (added 2026-11-25): GitHub offers no notification
+from someone else's repository to a workflow, so a workflow looks once a day. It takes
+upstream's latest release, waits until both images of that version are in the registry, and
+then opens one pull request per openGym version with the new tag and digests, upstream's
+licence and notices, and a changelog entry. It runs the image tests itself and writes the
+result into the pull request, because a pull request opened by a workflow does not start CI.
+The owner reads upstream's release notes, merges, and starts "Release".
+
 ## Alternatives rejected
 
 - **Let the Supervisor build the Dockerfile on the device.** No compiling, but it downloads
@@ -41,6 +49,8 @@ ESPHome); the official and community add-ons do the same across two repositories
   development, from a local add-on folder.
 - **Fully automatic releases.** Meets SC-3 with no effort but ships an unreviewed upstream
   release to a device holding the household's data.
+- **An issue instead of a pull request** when upstream releases. Less machinery, but the
+  new release would not be tested until someone sat down to do the bump.
 - **Add-on version equal to the openGym version.** Leaves no way to ship a packaging fix.
 - **Release from a branch, merge afterwards** (used once, for 1.4.5-1). Right order, but it
   depends on a person doing two steps in sequence, and no widely used add-on works this way.
@@ -61,6 +71,9 @@ ESPHome); the official and community add-ons do the same across two repositories
   install. The local add-on folder remains for quick fixes only.
 - If the version bump reaches the default branch before the image exists, every Green
   offered the update fails to install it. The workflow must make that order impossible.
+- The upstream workflow needs the repository setting that lets GitHub Actions create pull
+  requests. GitHub stops scheduled workflows after 60 days without activity in the
+  repository; SC-3 then depends on someone noticing.
 - The release workflow may commit to the default branch. A branch rule that blocks such
   commits would break releases. Commits made by a workflow do not start CI.
 - amd64 is built because upstream publishes it and it costs nothing, but only the Green is
