@@ -33,7 +33,9 @@ jobs:
         run: |
           echo "Start this workflow on main, not on $GITHUB_REF_NAME." >&2
           exit 1
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - name: Version format, openGym version, changelog entry
         run: scripts/addon-image.sh can-release
       - name: Refuse to replace a published version
@@ -54,16 +56,20 @@ jobs:
             runner: ubuntu-24.04-arm
     runs-on: ${{ matrix.runner }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: docker/login-action@v3
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          persist-credentials: false
       - name: Test the image on this architecture
         run: tests/run.sh
+      # Signed in only after the tests, which run openGym's code.
+      - name: Sign in to the registry
+        env:
+          TOKEN: ${{ github.token }}
+        run: echo "$TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
       - name: Build with the real version and push
-        run: scripts/addon-image.sh push-arch ${{ matrix.arch }}
+        env:
+          ARCH: ${{ matrix.arch }}
+        run: scripts/addon-image.sh push-arch "$ARCH"
 
   release:
     name: Publish the image, then the version
@@ -73,7 +79,9 @@ jobs:
       contents: write
       packages: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - name: main must not have moved since this run started
         # The images were built from this commit. Checked before anything becomes visible:
         # if it fails, start the workflow again; nothing has been published under the version.
@@ -83,20 +91,22 @@ jobs:
             echo "main has new commits since this run started. Start the workflow again." >&2
             exit 1
           fi
-      - uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Sign in to the registry
+        env:
+          TOKEN: ${{ github.token }}
+        run: echo "$TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
       - name: Publish the image for both architectures
         run: scripts/addon-image.sh manifest
       - name: Write the version into config.yaml and the changelog, on main
+        env:
+          TOKEN: ${{ github.token }}
         run: |
           scripts/addon-image.sh release-files
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "Release $ADDON_VERSION" opengym/config.yaml opengym/CHANGELOG.md
-          git push origin HEAD:main
+          # The checkout keeps no credentials; the token is used for this one command.
+          git push "https://x-access-token:$TOKEN@github.com/$GITHUB_REPOSITORY.git" HEAD:main
       - name: GitHub Release, for people (Home Assistant does not read it)
         env:
           GH_TOKEN: ${{ github.token }}

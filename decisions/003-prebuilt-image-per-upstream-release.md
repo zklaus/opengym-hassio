@@ -74,6 +74,10 @@ The owner reads upstream's release notes, merges, and starts "Release".
 - The upstream workflow needs the repository setting that lets GitHub Actions create pull
   requests. GitHub stops scheduled workflows after 60 days without activity in the
   repository; SC-3 then depends on someone noticing.
+- The workflows are part of what users trust (added 2026-11-25, after a security pass): the
+  only action used is GitHub's own checkout, pinned to a commit and kept current by
+  Dependabot; the checkout keeps no credentials, and the registry sign-in happens after the
+  tests have run openGym's code.
 - The release workflow may commit to the default branch. A branch rule that blocks such
   commits would break releases. Commits made by a workflow do not start CI.
 - amd64 is built because upstream publishes it and it costs nothing, but only the Green is

@@ -40,6 +40,8 @@ case "${1:-}" in
     for name in api web; do
       d=$(digest "$REGISTRY/opengym-$name:$new")
       [ -n "$d" ] || fail "$REGISTRY/opengym-$name:$new is not in the registry."
+      # What the registry answers goes into the Dockerfile; accept nothing but a digest.
+      echo "$d" | grep -Eq '^sha256:[0-9a-f]{64}$' || fail "Unexpected digest for opengym-$name:$new: $d"
       sed -i -E "s|^(FROM $REGISTRY/opengym-$name):[^ ]+|\1:$new@$d|" "$DOCKERFILE"
     done
     [ "$(carried)" = "$new" ] || fail "Could not write openGym $new into $DOCKERFILE."

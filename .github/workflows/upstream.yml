@@ -29,7 +29,9 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - name: Is there a release we do not carry?
         id: look
         run: |
@@ -48,7 +50,9 @@ jobs:
           echo "carried=$carried" >> "$GITHUB_OUTPUT"
       - name: Change the files
         if: steps.look.outputs.version
-        run: scripts/upstream-update.sh apply "${{ steps.look.outputs.version }}"
+        env:
+          NEW: ${{ steps.look.outputs.version }}
+        run: scripts/upstream-update.sh apply "$NEW"
       - name: Test the image with the new openGym
         # A pull request opened by a workflow does not start CI, so the tests run here and
         # their result goes into the pull request. A failure is a finding, not a reason to
@@ -72,7 +76,8 @@ jobs:
           git switch -c "upstream-$NEW"
           git add opengym
           git commit -m "Carry openGym $NEW"
-          git push origin "upstream-$NEW"
+          # The checkout keeps no credentials; the token is used for this one command.
+          git push "https://x-access-token:$GH_TOKEN@github.com/$GITHUB_REPOSITORY.git" "upstream-$NEW"
           if [ "$TESTS" = success ]; then
             result="**Tests: passed** on amd64 (\`tests/run.sh\`, in the run linked below)."
           else

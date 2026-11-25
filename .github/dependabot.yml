@@ -1,0 +1,13 @@
+# Keeps the GitHub Actions used by the workflows current. They are pinned to a commit, with
+# the version in a comment; Dependabot updates both.
+# Not for the Dockerfile: openGym's two images are followed by the "Upstream release"
+# workflow, which moves them together (decisions/003).
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    # Wait a week after a release before proposing it: most bad releases are caught by then.
+    cooldown:
+      default-days: 7
