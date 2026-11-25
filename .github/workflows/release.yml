@@ -1,0 +1,106 @@
+# Releases an add-on version (decisions/003). Started by hand on main, with the new version.
+#
+# Home Assistant offers whatever version opengym/config.yaml on main names, so the order is
+# fixed: test and push the image for both architectures first, and only then write the
+# version into config.yaml and the changelog on main. Nobody edits that version by hand.
+# Refuses to replace a version that is already published.
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "New add-on version: the openGym version and a counter, for example 1.4.5-2"
+        required: true
+        type: string
+
+# One release at a time.
+concurrency: release
+
+permissions:
+  contents: read
+
+env:
+  ADDON_VERSION: ${{ inputs.version }}
+
+jobs:
+  check:
+    name: Can this version be released?
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Releases are made from main
+        if: github.ref != 'refs/heads/main'
+        run: |
+          echo "Start this workflow on main, not on $GITHUB_REF_NAME." >&2
+          exit 1
+      - uses: actions/checkout@v4
+      - name: Version format, openGym version, changelog entry
+        run: scripts/addon-image.sh can-release
+      - name: Refuse to replace a published version
+        run: scripts/addon-image.sh unpublished
+
+  build:
+    name: Build and test (${{ matrix.arch }})
+    needs: check
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      matrix:
+        include:
+          - arch: amd64
+            runner: ubuntu-24.04
+          - arch: aarch64
+            runner: ubuntu-24.04-arm
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Test the image on this architecture
+        run: tests/run.sh
+      - name: Build with the real version and push
+        run: scripts/addon-image.sh push-arch ${{ matrix.arch }}
+
+  release:
+    name: Publish the image, then the version
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: main must not have moved since this run started
+        # The images were built from this commit. Checked before anything becomes visible:
+        # if it fails, start the workflow again; nothing has been published under the version.
+        run: |
+          git fetch origin main
+          if [ "$(git rev-parse origin/main)" != "$GITHUB_SHA" ]; then
+            echo "main has new commits since this run started. Start the workflow again." >&2
+            exit 1
+          fi
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish the image for both architectures
+        run: scripts/addon-image.sh manifest
+      - name: Write the version into config.yaml and the changelog, on main
+        run: |
+          scripts/addon-image.sh release-files
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Release $ADDON_VERSION" opengym/config.yaml opengym/CHANGELOG.md
+          git push origin HEAD:main
+      - name: GitHub Release, for people (Home Assistant does not read it)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          scripts/addon-image.sh notes > "$RUNNER_TEMP/notes.md"
+          gh release create "v$ADDON_VERSION" --target "$(git rev-parse HEAD)" \
+            --title "$ADDON_VERSION" --notes-file "$RUNNER_TEMP/notes.md"

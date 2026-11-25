@@ -89,8 +89,9 @@ repository `zklaus/opengym-hassio`, image `ghcr.io/zklaus/opengym-addon`.
       as `1.4.5-1`; the image can be read without credentials.
 - [x] Re-run CI on main: its first run failed as designed, because it ran before the image
       existed (POR-1, D-003). Green on 2026-11-23.
-- [ ] Owner, once CI is green: make "Image for this version is published" a required check
-      on main, so a version without an image cannot be merged (POR-1, D-003)
+- [ ] ~~Owner, once CI is green: make "Image for this version is published" a required
+      check on main, so a version without an image cannot be merged~~ (POR-1, D-003).
+      Dropped 2026-11-25: the version is now written by the release workflow (see M7).
 - [x] From the workstation: pull the published image by tag and compare it with upstream's,
       as `tests/run.sh` does (DR-1). Done 2026-11-23 for amd64: identical. aarch64 cannot be
       run on the workstation; its evidence is the publish run, where the same comparison
@@ -161,8 +162,12 @@ repository `zklaus/opengym-hassio`, image `ghcr.io/zklaus/opengym-addon`.
 
 ### M7 Data survives
 
-- [ ] Reboot the Green: data, sessions and pairings intact (RR-1, FR-3)
+- [x] Reboot the Green: data, sessions and pairings intact (RR-1, FR-3). Done 2026-11-25.
 - [ ] Backup, restore on a fresh Home Assistant, point the address there (RR-1, SC-2)
+- [x] Replace "publish on a branch, then merge" by one "Release" workflow on main that
+      pushes the image and then writes the version and changelog itself; D-003 revised
+      (POR-1, D-003). Prepared 2026-11-25; first used for `1.4.5-2`.
+- [ ] Owner: push main, then run "Release" with version `1.4.5-2` (POR-1, D-003)
 - [ ] Store update from one published version to the next with data present; this also
       confirms how Home Assistant orders `X.Y.Z-n` versions (RR-1, D-003)
 - [ ] Memory at rest with five profiles, from Home Assistant's add-on statistics (POR-1)

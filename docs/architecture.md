@@ -108,14 +108,16 @@ pairings survive restart, update and restore because the secret that signs them 
 Satisfies: FR-1, DR-1, POR-1, SC-3
 
 `repository.yaml` at the root makes the repository addable in the add-on store. A GitHub
-Actions workflow, started by hand on the branch that carries a new version, builds the image
-for each add-on version and pushes it to GitHub's container registry (ghcr.io), and fails if `/app` or the
-web root differ from upstream's or if the API does not answer in the built image. A scheduled
+Actions workflow ("Release"), started by hand on the default branch with the new version,
+builds the image for both architectures and pushes it to GitHub's container registry
+(ghcr.io); it fails if `/app` or the web root differ from upstream's or if the API does not
+answer in the built image. Only after the push does the same workflow write the version into
+`config.yaml` and the changelog on the default branch and create a GitHub Release. A scheduled
 workflow notices a new upstream release and prepares the version bump and the `CHANGELOG.md`
 entry naming the openGym release; the owner reviews and releases (D-003). Home Assistant
 learns of an update from `config.yaml` on the default branch, not from GitHub Releases, so
-the image is always pushed before the version bump lands; a GitHub Release is created
-alongside for readers.
+the image is always pushed before the version lands there; the GitHub Release is for
+readers. Changes waiting for a release sit under "Unreleased" in the changelog.
 
 ### C8 Documentation (`opengym/DOCS.md`)
 
