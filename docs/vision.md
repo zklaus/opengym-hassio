@@ -21,20 +21,24 @@ of them modify openGym to fit there.
 
 ## Existing alternatives
 
-Found on GitHub on 2026-11-22; none is endorsed or mentioned by upstream. All four are built
-around Home Assistant ingress (the sidebar). Re-check before relying on this.
+Found on GitHub on 2026-11-22 and re-checked on 2026-11-25, when a fifth had appeared and
+three of the first four had changed; none is endorsed or mentioned by upstream. All five are
+built around Home Assistant ingress (the sidebar), and four now offer an optional direct
+port beside it for the phone app. Re-check before relying on this.
 
 | Add-on | openGym carried | How it differs from what we want |
 |---|---|---|
-| mzspicoli/opengym-homeassistant | not checked | Own prebuilt image; ingress plus a direct port; untouched since 2026-09-05. |
-| Amantux/opengym-ha | 1.4.2 | Patches the openGym API to sign Home Assistant users in; bundles an integration. |
-| ChadJPetersen/home-assistant-opengym | 1.4.4 | Re-assembles the app on a Home Assistant base image; adds MQTT sensors. |
-| misterblokhead/ha-opengym | 1.4.3 | Closest in spirit: upstream images pinned by digest, two response headers changed so the app can be framed. Ingress only, refuses to start without an HTTPS address, no LAN port. |
+| mzspicoli/opengym-homeassistant | a commit of the author's own fork | Builds openGym from source of a fork on GitLab and edits it with `sed`; the only other one with a prebuilt image; ingress plus a port published by default; optional MCP; guest mode on by default. Active again (2026-11-25). |
+| Amantux/opengym-ha | 1.4.5 | Upstream images pinned by digest, then patches to sign Home Assistant users in; optional direct port with an `external_url` for passkeys and the phone app; bundles an integration; tests, security scan and an upstream-sync workflow. Built on the device. |
+| ChadJPetersen/home-assistant-opengym | 1.4.4 | Re-assembles the app on a Home Assistant base image; password sign-in, passkeys "best effort"; optional API-only port for the phone app; MQTT sensors. Built on the device. |
+| misterblokhead/ha-opengym | 1.4.3 | Closest in spirit: upstream images pinned by digest, two response headers changed so the app can be framed. Ingress only, refuses to start without an HTTPS address, no port; says the phone app needs openGym at its own address. Built on the device. Untouched since 2026-11-04. |
+| syky27/hassio-opengym (new, 2026-11-23) | 1.4.5 | Upstream images by tag, not digest; sidebar first, reachable through Home Assistant Cloud; password sign-in instead of passkeys; optional LAN port for the phone app and MCP; bundles an integration. Built on the device. |
 
 Two Home Assistant integrations also exist (JImmyB0nes/OpenGym-HomeAssistant, and the one
 bundled by Amantux), which supports keeping an integration out of scope here.
 
-What this add-on does differently: upstream's images byte-for-byte (principle 1), served at
+What this add-on does differently: upstream's images byte-for-byte (principle 1) with a test
+that proves it, a prebuilt image so nothing is built on the device, and openGym served at
 its own HTTPS address rather than inside the sidebar, so that the native and watch apps
 (UC-7) and upstream's own sign-in methods work as upstream documents them. This project is also a practice run for spec-driven development, so an
 existing alternative does not end it.
